@@ -1,0 +1,13 @@
+{
+  "name": "osprey",
+  "owner": {
+    "name": "Bruno Lemos"
+  },
+  "plugins": [
+    {
+      "name": "osprey",
+      "source": "./",
+      "description": "Revisão sem contexto dos testes contra o plano, no espírito do Elephant-Goldfish Model."
+    }
+  ]
+}
