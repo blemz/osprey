@@ -54,7 +54,7 @@ Resposta que não for JSON válido conta como zero achados daquele revisor e ent
 Agrupe os achados que falam do mesmo problema no mesmo teste (ou na mesma lacuna da unidade).
 
 - Apontado por 2 ou mais revisores → **confirmado**.
-- Apontado por um só → por unidade, dispare **um** `osprey:refutador` novo, com os mesmos caminhos do Passo 2 mais a lista numerada dos achados isolados daquela unidade (texto literal de cada revisor). `confirmado` fica; `refutado` vai para descartados com o motivo dele.
+- Apontado por um só → por unidade, dispare **um** `osprey:refutador` novo, com a linha `Tipo: testes`, os mesmos caminhos do Passo 2 e a lista numerada dos achados isolados daquela unidade (texto literal de cada revisor). `confirmado` fica; `refutado` vai para descartados com o motivo dele.
 
 Nenhum achado segue sem passar por um dos dois caminhos.
 

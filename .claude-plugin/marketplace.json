@@ -7,7 +7,7 @@
     {
       "name": "osprey",
       "source": "./",
-      "description": "Revisão sem contexto dos testes contra o plano, no espírito do Elephant-Goldfish Model."
+      "description": "Revisão sem contexto dos testes e triagem dos achados do EGM, no espírito do Elephant-Goldfish Model."
     }
   ]
 }

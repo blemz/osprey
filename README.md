@@ -1,8 +1,11 @@
 # Osprey
 
-Revisão sem contexto dos testes contra o plano, para Claude Code.
+Revisão sem contexto dos testes contra o plano, e triagem dos achados do EGM, para Claude Code.
 
-O [Elephant-Goldfish Model](https://github.com/google/elephant-goldfish-model) revisa o documento. O Osprey revisa os testes que vão cobrar o documento: três revisores isolados atacam os testes de cada unidade do plano, um refutador derruba o que não se sustenta, o que é técnico é corrigido sozinho e só as decisões de negócio chegam até você, como perguntas A/B.
+O [Elephant-Goldfish Model](https://github.com/google/elephant-goldfish-model) revisa o documento. O Osprey cuida de duas coisas em volta dele:
+
+- **`/osprey:triage`** pega os achados que o EGM fez no documento, manda um refutador sem contexto derrubar o que não se sustenta, corrige sozinho o que tem fonte citável e transforma o resto em perguntas A/B. Você deixa de aprovar achado por achado.
+- **`/osprey:review`** revisa os testes que vão cobrar o documento: três revisores isolados atacam os testes de cada unidade do plano, o refutador filtra, o que é técnico é corrigido sozinho e só as decisões de negócio chegam até você.
 
 ## Instalação
 
@@ -14,6 +17,19 @@ claude plugin install osprey@osprey
 Atualizar depois: `claude plugin marketplace update osprey` e `claude plugin update osprey@osprey`.
 
 ## Uso
+
+### Triagem dos achados do EGM
+
+```
+/osprey:triage implementation_readiness_report.md docs/plano.md
+```
+
+- Primeiro argumento: o relatório do EGM (`critic_report.md`, `implementation_readiness_report.md`, `consolidated_review_report.md` etc.). Segundo, opcional: o documento revisado; sem ele, vale o `Target:` do relatório.
+- Rode no gate dos Stages 7 ou 9 do `/egm:egm-review`, no lugar do `egm-resolve`: pause o EGM, rode a triagem e depois avise o EGM que o documento foi editado, para ele re-auditar.
+- Só se corrige sozinho o que uma fonte literal já diz (outro trecho do documento, a spec ou o código). Nada que remova requisito, restrição, escopo ou decisão registrada é feito sem você.
+- Relatório em `docs/osprey/<documento>/TRIAGEM.md`.
+
+### Revisão dos testes
 
 ```
 /osprey:review docs/plano.md tests/
@@ -38,7 +54,9 @@ Atualizar depois: `claude plugin marketplace update osprey` e `claude plugin upd
 ## Fluxo com o EGM
 
 ```
-/egm:egm-review <plano> implementation   # revisa o plano
+/egm:egm-review <plano> implementation   # o EGM revisa o plano e para no gate
+/osprey:triage <relatório> <plano>       # filtra, corrige e pergunta só o essencial
+(avisar o EGM para re-auditar)
 (escrever os testes)
 /osprey:review <plano> <testes>          # revisa os testes contra o plano
 (implementar)
